@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "API.Controllers.UsersController",
+    "Method": "GetUsers",
+    "RelativePath": "api/Users/GetAllUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
