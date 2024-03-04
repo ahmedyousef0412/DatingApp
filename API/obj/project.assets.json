@@ -8237,11 +8237,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Github Projects\\Dating-App\\API\\API.csproj",
+      "projectUniqueName": "D:\\Github Projects\\DatingApp\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "D:\\Github Projects\\Dating-App\\API\\API.csproj",
+      "projectPath": "D:\\Github Projects\\DatingApp\\API\\API.csproj",
       "packagesPath": "C:\\Users\\Genius\\.nuget\\packages\\",
-      "outputPath": "D:\\Github Projects\\Dating-App\\API\\obj\\",
+      "outputPath": "D:\\Github Projects\\DatingApp\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Genius\\AppData\\Roaming\\NuGet\\NuGet.Config",

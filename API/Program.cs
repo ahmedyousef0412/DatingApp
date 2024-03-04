@@ -27,6 +27,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 #endregion
 
+#region Cors Policy
+
+
+builder.Services.AddCors(options =>
+{
+
+    options.AddPolicy("corsPolicy", builder =>
+    {
+        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+
+    });
+});
+
+#endregion
 
 
 
@@ -41,6 +55,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseCors("corsPolicy");
 app.UseAuthorization();
 
 
