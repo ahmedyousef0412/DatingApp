@@ -1,0 +1,10 @@
+.navbar-form {
+    display: grid;
+    grid-template-columns: auto auto 1fr; /* Define columns */
+    align-items: center; /* Align elements vertically */
+    gap: 10px; /* Add some gap between elements */
+}
+
+.navbar-form button {
+    grid-column: 3; /* Place button in the third column */
+}

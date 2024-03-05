@@ -1,0 +1,213 @@
+
+<div class="outer">
+
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+
+                <div class="panel border bg-white">
+                 <div class="panel-heading">
+                    <h3 class="pt-3 font-weight-bold">
+                        Sign Up
+                    </h3>
+                 </div>
+                 <div class="panel-body p-3">
+                   <form [formGroup]="signUpForm" #form="ngForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+                    <div class="form-group pt-3">
+                        <div class="input-field" [class.error]="Username.hasError('required') &&
+                        (Username.touched || form.submitted)">
+                          <span class="fa fa-user p-2"> </span>  
+                          <input type="text" formControlName="username" class="form-control" placeholder="User Name">
+                        </div>
+                        <span *ngIf="
+                                Username.hasError('required') &&
+                                (Username.touched || form.submitted)
+                              " class="p-1 error-msg small text-danger" role="alert">
+                                                  <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                                  Username is required
+                         </span>
+                       
+                    </div>
+
+                
+
+                    <div class="form-group pt-3">
+                        <div class="input-field" [class.error]="Email.hasError('required') &&
+                        (Email.touched || form.submitted)">
+                          <span class="fa fa-envelope  p-2"> </span>  
+                          <input type="text" formControlName="email" class="form-control" placeholder="Email">
+                        </div>
+                        <span *ngIf="
+                        Email.hasError('required') &&
+                        (Email.touched || form.submitted)
+                      " class="p-1 error-msg small text-danger" role="alert">
+                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                          Email is required
+                 </span>
+                    </div>
+
+                 
+                    <div class="form-group pt-3">
+                        <div class="input-field" [class.error]="Password.hasError('required') &&
+                        (Password.touched || form.submitted)">
+                          <span class="fa fa-lock p-2"> </span>  
+                          <input type="password" formControlName="password" class="form-control" placeholder="Password">
+                         
+                        </div>
+                        <span *ngIf="
+                        Password.hasError('required') &&
+                        (Password.touched || form.submitted)
+                      " class="p-1 error-msg small text-danger" role="alert">
+                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                          Password is required
+                 </span>
+                    </div>
+
+
+
+                    <div class="form-group pt-3">
+                        <div class="input-field" [class.error]="KnowAs.hasError('required') &&
+                        (KnowAs.touched || form.submitted)">
+                          <span class="fa fa-user p-2"> </span>  
+                          <input type="text" formControlName="knowAs" class="form-control" placeholder="knowAs">
+                        </div>
+                        <span *ngIf="
+                        KnowAs.hasError('required') &&
+                        (KnowAs.touched || form.submitted)
+                      " class="p-1 error-msg small text-danger" role="alert">
+                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                          KnowAs is required
+                 </span>
+                    </div>
+
+
+                    <div class="form-group pt-3">
+                        <div class="input-field" [class.error]="Introduction.hasError('required') &&
+                        (Introduction.touched || form.submitted)">
+                          <span class="fa fa-user p-2"> </span>  
+                          <input type="text" formControlName="introduction" class="form-control" placeholder="Introduction">
+                        </div>
+                        <span *ngIf="
+                        Introduction.hasError('required') &&
+                        (Introduction.touched || form.submitted)
+                      " class="p-1 error-msg small text-danger" role="alert">
+                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                          Introduction is required
+                 </span>
+                    </div>
+
+
+
+
+
+                    <div class="form-group pt-3">
+                        <div class="input-field" [class.error]="Intrestes.hasError('required') &&
+                        (Intrestes.touched || form.submitted)">
+                       <span class="fa fa-heart p-2"></span> 
+                          <input type="text" formControlName="intrestes" class="form-control" placeholder="Intrestes">
+                        </div>
+                        <span *ngIf="
+                        Intrestes.hasError('required') &&
+                        (Intrestes.touched || form.submitted)
+                      " class="p-1 error-msg small text-danger" role="alert">
+                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                          Intrestes is required
+                 </span>
+                    </div>
+
+                    <div class="form-group pt-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <div  class="input-field" [class.error]="Gender.hasError('required') && (Gender.touched || form.submitted)">
+                            <span class="fa fa-venus-mars p-2"></span>
+                          <select formControlName="gender"  class="form-control"  required>
+                            <option value=" " disabled selected hidden>Choose Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                          </select>
+                        </div>
+                        <span *ngIf="Gender.hasError('required') && (Gender.touched || form.submitted)" class="p-1 error-msg small text-danger" role="alert">
+                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                          Gender is required
+                        </span>
+                      </div>
+                      
+
+
+                    <div class="form-group pt-3">
+                        <div class="input-field" [class.error]="LookingFor.hasError('required') &&
+                        (LookingFor.touched || form.submitted)">
+                          <span class="fa fa-user p-2"> </span>  
+                          <input type="text" formControlName="lookingFor" class="form-control" placeholder="LookingFor">
+                        </div>
+                        <span *ngIf="
+                        LookingFor.hasError('required') &&
+                        (LookingFor.touched || form.submitted)
+                      " class="p-1 error-msg small text-danger" role="alert">
+                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                          LookingFor is required
+                 </span>
+                    </div>
+
+
+                    <div class="form-group pt-3">
+                        <div class="input-field" [class.error]="City.hasError('required') &&
+                        (City.touched || form.submitted)">
+                         <span class="fa fa-building p-2"></span> 
+                          <input type="text" formControlName="city" class="form-control" placeholder="City">
+                        </div>
+                        <span *ngIf="
+                        City.hasError('required') &&
+                        (City.touched || form.submitted)
+                      " class="p-1 error-msg small text-danger" role="alert">
+                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                          City is required
+                 </span>
+                    </div>
+
+
+                    <div class="form-group pt-3">
+                       
+                        <div class="input-field" [class.error]="Country.hasError('required') &&
+                        (Country.touched || form.submitted)">
+                          <span class="fa fa-globe p-2"></span>
+                          <input type="text" formControlName="country" class="form-control" placeholder="Country">
+                        </div>
+                        <span *ngIf="
+                        Country.hasError('required') &&
+                        (Country.touched || form.submitted)
+                      " class="p-1 error-msg small text-danger" role="alert">
+                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                          Country is required
+                 </span>
+                    </div>
+
+
+
+                    <div class="form-group pt-3">
+                        <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                        <div class="input-field" [class.error]="DateOfBirth.hasError('required') && (DateOfBirth.touched || form.submitted)">
+                          <span class="fa fa-calendar p-2"></span>
+                          <input type="date" formControlName="dateOfBirth" class="form-control" id="dateOfBirth" placeholder="Date of Birth" max="{{ maxDate }}">
+                        </div>
+                        <span *ngIf="DateOfBirth.hasError('required') && (DateOfBirth.touched || form.submitted)" class="p-1 error-msg small text-danger" role="alert">
+                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                          Date of Birth is required
+                        </span>
+                      </div>
+                  
+                    <button type="submit" [disabled]="form.invalid" class="btn btn-primary btn-block mt-4 w-100">Sign Up</button>
+
+                    <div class="text-center pt-4 text-muted">
+                        Already have an account? <a id="forget" routerLink="/Login">Login</a>
+                    </div>
+                   </form>
+                 </div>
+
+             
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</div>
