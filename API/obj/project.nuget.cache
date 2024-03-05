@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ZAFN0PEuibbc00ec8rJ+UaZt5v4AqHPsqfEy7U/1SutzBx7nuyfQcHvKR1UVsNs6nJ9mk5JbJxdLsvHTYrqxWw==",
+  "dgSpecHash": "86BJdZRGJMjX+hFse/FBXigFnieSDBcdQbzH5CRsB4bNGj9SB+1lCvQMvQcs2ViYX/SKc8BY+0sF8diZkzw6Cg==",
   "success": true,
   "projectFilePath": "D:\\Github Projects\\DatingApp\\API\\API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Genius\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Genius\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Genius\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\Genius\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",

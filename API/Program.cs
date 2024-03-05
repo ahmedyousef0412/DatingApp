@@ -1,10 +1,15 @@
 using API.Data;
 using API.Entities;
-
+using API.Helper;
+using API.Interfaces;
+using API.Interfaces.Implementation;
+using API.Mapping;
+using API.Seed;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,15 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-#region Connection String
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-#endregion
+builder.Services.AddAppServices(builder.Configuration);
 
 #region Cors Policy
 
@@ -58,7 +55,16 @@ app.UseAuthentication();
 app.UseCors("corsPolicy");
 app.UseAuthorization();
 
+#region Seed Roles and Users
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
 
+using var scope = scopeFactory.CreateScope();
+
+var roleManger = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+
+await DefaultRoles.SeedRolesAsync(roleManger);
+#endregion
 
 app.MapControllers();
 

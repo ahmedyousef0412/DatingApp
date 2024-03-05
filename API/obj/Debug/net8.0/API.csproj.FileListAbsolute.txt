@@ -518,3 +518,4 @@ D:\Github Projects\DatingApp\API\obj\Debug\net8.0\refint\API.dll
 D:\Github Projects\DatingApp\API\obj\Debug\net8.0\API.pdb
 D:\Github Projects\DatingApp\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 D:\Github Projects\DatingApp\API\obj\Debug\net8.0\ref\API.dll
+D:\Github Projects\DatingApp\API\bin\Debug\net8.0\AutoMapper.dll

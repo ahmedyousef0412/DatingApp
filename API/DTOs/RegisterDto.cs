@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace API.DTOs;
 
-namespace API.Entities;
-
-
-
-public class ApplicationUser:IdentityUser
+public class RegisterDto
 {
 
-    public DateTime DateOfBirth  { get; set; }
+    public string Email { get; set; } = null!;
+
+    public string Password { get; set; } = null!;
+
+    public string UserName { get; set; } = null!;
+    public DateTime DateOfBirth { get; set; }
     public string KnowAs { get; set; } = null!;
 
     public DateTime Created { get; set; } = DateTime.Now;

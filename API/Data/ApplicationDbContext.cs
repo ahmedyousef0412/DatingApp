@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
 
-    public DbSet<ApplicationUser> Users { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder builder)
