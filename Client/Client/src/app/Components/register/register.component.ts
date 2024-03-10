@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -18,7 +19,10 @@ export class RegisterComponent implements OnInit {
   maxDate: string;
   signUpForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router ,private authService:AuthService) {
+  constructor(private fb: FormBuilder,
+     private router: Router,
+     private authService:AuthService,
+     private toastr:ToastrService) {
 
 
     const yesterday = new Date();
@@ -110,6 +114,7 @@ export class RegisterComponent implements OnInit {
           console.log("success");
         },error:(err)=>{
           console.log(err);
+          this.toastr.error(err.error);
         
          }
       })

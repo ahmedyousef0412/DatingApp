@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
+import { map } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -16,8 +18,12 @@ export class LoginComponent implements OnInit{
 
 
   loginForm!: FormGroup;
+  userName:string;
 
-  constructor(private fb:FormBuilder ,private router:Router,private authService:AuthService ){}
+  constructor(private fb:FormBuilder 
+    ,private router:Router
+    ,private authService:AuthService,
+    private toastr:ToastrService ){}
   ngOnInit(): void {
     this.initLoginForm();
   }
@@ -47,25 +53,33 @@ export class LoginComponent implements OnInit{
       .subscribe({
 
        next:(res)=>{
-        this.router.navigate(['/NavBar']);
+        this.router.navigate(['/members']);
 
          this.loginForm.reset();
+
+         this.authService.storeUserName(res.userName);
          this.authService.storeToken(res.token);
          
           // this.toast.success({detail:"SUCCESS",summary:res.message , duration:5000});
           console.log("success");
-          
- 
-
        },
        error:(err)=>{
         console.log(err);
-      
+        this.toastr.error(err.error)     
+       },
+       complete:()=>{
+          console.log("complete");
+          
        }
       });
       
     }
     else{
+
+      // this.authService.login(this.loginForm.value).pipe(
+
+      //   map()
+      // )
      //Using Toastar
     }
 }

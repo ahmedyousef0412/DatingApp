@@ -8,3 +8,7 @@
 .navbar-form button {
     grid-column: 3; /* Place button in the third column */
 }
+.dropdown-toggle, .dropdown-item{
+
+    cursor: pointer;
+}

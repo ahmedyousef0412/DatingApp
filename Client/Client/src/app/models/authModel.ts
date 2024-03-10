@@ -1,8 +1,8 @@
 export class Auth{
-      Message:string;
-      IsAuthenticated:boolean; 
-      UserName :string;
-      Email :string;
+      message:string;
+      isAuthenticated:boolean; 
+      userName :string;
+      email :string;
       Roles :string[];
       token :string;
       ExpiresOn :Date;
