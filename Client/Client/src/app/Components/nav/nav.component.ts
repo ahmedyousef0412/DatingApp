@@ -14,39 +14,17 @@ import { HomeComponent } from "../home/home.component";
 })
 export class NavComponent implements OnInit  {
 
-  // loginForm!: FormGroup;
-  // isLogged:boolean=false;
-  // userName:string;
-
-  // constructor( private authService:AuthService ){}
-  // ngOnInit(): void {
-   
-  //   this.authService.isLoggedIn$.subscribe(({ isLoggedIn, userName }) => {
-  //     this.isLogged = isLoggedIn;
-  //     this.userName = userName;
-  //   });
-  // }
-
-
-
-  // logout(){
-  //   this.authService.signOut();
-  //   this.isLogged = false;
-  // }
-
-
-
-
-
   isLogged: boolean = false;
   userName: string;
+  knowAs:string;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService.isLoggedIn$.subscribe(({ isLoggedIn, userName }) => {
+    this.authService.isLoggedIn$.subscribe(({ isLoggedIn, userName,knowAs }) => {
       this.isLogged = isLoggedIn;
       this.userName = userName;
+      this.knowAs = knowAs;
     });
   }
 

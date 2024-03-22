@@ -36,7 +36,7 @@ public class AuthService : IAuthService
         if (await _userManager.FindByEmailAsync(model.Email) is not null)
             return new AuthModel { Message = "Email is already exist!" };
 
-        if(await _userManager.FindByNameAsync(model.UserName) is not null)
+        if(await _userManager.FindByNameAsync(model.Username) is not null)
             return new AuthModel { Message = "UserName is already exist!" };
 
         var user = _mapper.Map<ApplicationUser>(model);
@@ -62,6 +62,7 @@ public class AuthService : IAuthService
         return new AuthModel
         {
             Email = user.Email,
+            KnowAs = user.KnowAs,
             ExpiresOn = jwtToken.ValidTo,
             IsAuthenticated = true,
             Roles = new List<string> { AppRoles.Member },
@@ -93,6 +94,7 @@ public class AuthService : IAuthService
         authModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
         authModel.Email = user.Email!;
         authModel.UserName = user.UserName!;
+        authModel.KnowAs = user.KnowAs!;
         authModel.ExpiresOn = jwtSecurityToken.ValidTo;
 
         authModel.Roles = roles.ToList();
@@ -124,6 +126,7 @@ public class AuthService : IAuthService
                 new Claim (JwtRegisteredClaimNames.Sub ,user.UserName!),
                 new Claim (JwtRegisteredClaimNames.Email ,user.Email!),
                 new Claim ("uid" ,user.Id!),
+                new Claim("knowAs",user.KnowAs)
         }
         .Union(userClaims).Union(claimRoles);
 

@@ -265,6 +265,7 @@ D:\Github Projects\DatingApp\API\bin\Debug\net8.0\API.deps.json
 D:\Github Projects\DatingApp\API\bin\Debug\net8.0\API.runtimeconfig.json
 D:\Github Projects\DatingApp\API\bin\Debug\net8.0\API.dll
 D:\Github Projects\DatingApp\API\bin\Debug\net8.0\API.pdb
+D:\Github Projects\DatingApp\API\bin\Debug\net8.0\AutoMapper.dll
 D:\Github Projects\DatingApp\API\bin\Debug\net8.0\Azure.Core.dll
 D:\Github Projects\DatingApp\API\bin\Debug\net8.0\Azure.Identity.dll
 D:\Github Projects\DatingApp\API\bin\Debug\net8.0\Humanizer.dll
@@ -518,4 +519,3 @@ D:\Github Projects\DatingApp\API\obj\Debug\net8.0\refint\API.dll
 D:\Github Projects\DatingApp\API\obj\Debug\net8.0\API.pdb
 D:\Github Projects\DatingApp\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 D:\Github Projects\DatingApp\API\obj\Debug\net8.0\ref\API.dll
-D:\Github Projects\DatingApp\API\bin\Debug\net8.0\AutoMapper.dll

@@ -5,14 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-public class AccountController : BaseApiController
+public class AccountController(IAuthService authService) : BaseApiController
 {
-    private readonly IAuthService _authService;
-    public AccountController(IAuthService authService)
-    {
-        _authService = authService;
-    }
 
+    #region Fields
+
+    private readonly IAuthService _authService = authService;
+
+    #endregion
+
+
+    #region Actions
 
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
@@ -26,7 +29,7 @@ public class AccountController : BaseApiController
             return BadRequest(result.Message);
 
 
-        return Ok(new { Token = result.Token, ExpireOn = result.ExpiresOn });
+        return Ok(new { result.Token, ExpireOn = result.ExpiresOn });
     }
 
     [HttpPost("Login")]
@@ -44,4 +47,7 @@ public class AccountController : BaseApiController
         return Ok(result);
 
     }
+
+
+    #endregion
 }

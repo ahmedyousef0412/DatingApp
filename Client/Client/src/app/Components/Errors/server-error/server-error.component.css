@@ -1,0 +1,15 @@
+.server-error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  mat-card {
+    width: 400px;
+  }
+  
+  mat-card-title {
+    color: #FF5733; /* Example color */
+  }
+  

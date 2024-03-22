@@ -1,0 +1,7 @@
+export class Photo{
+    id: number;
+    url: string;
+    isMain: boolean;
+    publicId: string;
+    userId: string;
+}

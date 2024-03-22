@@ -8,6 +8,8 @@ import { RegisterComponent } from './Components/register/register.component';
 import { authGuard } from './Guards/auth.guard';
 import { HomeComponent } from './Components/home/home.component';
 import { MemberListComponent } from './Components/members/member-list/member-list.component';
+import { NotFoundComponent } from './Components/Errors/not-found/not-found.component';
+import { ServerErrorComponent } from './Components/Errors/server-error/server-error.component';
 
 export const routes: Routes = [
 
@@ -17,16 +19,17 @@ export const routes: Routes = [
         ,canActivate:[authGuard],
         children:[
             { path: 'members', component: MemberListComponent,canActivate: [authGuard] },
-            { path: 'member/:id', component: MemberDetailsComponent,canActivate: [authGuard] },
+            { path: 'member/:username', component: MemberDetailsComponent,canActivate: [authGuard] },
             { path: 'lists', component: ListsComponent,canActivate: [authGuard] },
             { path: 'message', component: MessagesComponent,canActivate: [authGuard] },
             { path: "NavBar", component: NavComponent, canActivate: [authGuard] },
         ]
     },
-   
+    {path: 'Not-found', component: NotFoundComponent},
+    {path: 'Server-error', component: ServerErrorComponent},
     { path: "Login", component: LoginComponent, },
     { path: "Register", component: RegisterComponent },
-    { path: '**', component: HomeComponent,pathMatch:'full' }
+    { path: '**', component: NotFoundComponent,pathMatch:'full' }
 ];
 
 

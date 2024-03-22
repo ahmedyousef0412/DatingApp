@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-import { User } from '../models/user';
+import { environment } from '../../environments/environment';
+import { Member } from '../models/memberDto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,9 @@ export class UsersService {
   constructor(private http:HttpClient) { }
 
   getAllUsers(){
-    return this.http.get<User>(`${this.baseUrl}/Users/GetAllUsers`);
+    return this.http.get<Member[]>(`${this.baseUrl}Users`);
+  }
+  getUser(userName:string){
+    return this.http.get<Member>(`${this.baseUrl}Users/${userName}`);
   }
 }

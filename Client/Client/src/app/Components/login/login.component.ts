@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
-import { map } from 'rxjs';
+
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -46,7 +46,9 @@ export class LoginComponent implements OnInit{
     return this.loginForm.get('password') as FormControl;
   }
 
+ 
   onLogin(){
+    // debugger;
     if(this.loginForm.valid){
       // console.log(this.loginForm.value);
       this.authService.login(this.loginForm.value)
@@ -59,13 +61,16 @@ export class LoginComponent implements OnInit{
 
          this.authService.storeUserName(res.userName);
          this.authService.storeToken(res.token);
-         
-          // this.toast.success({detail:"SUCCESS",summary:res.message , duration:5000});
-          console.log("success");
+         this.authService.storeUserKnowAs(res.knowAs);
+         this.toastr.success(`Welcome : ${res.userName}`);
+          // console.log("success");
        },
        error:(err)=>{
-        console.log(err);
-        this.toastr.error(err.error)     
+    
+       
+        console.error(err);
+          this.toastr.error(err.error);
+         
        },
        complete:()=>{
           console.log("complete");
@@ -76,11 +81,8 @@ export class LoginComponent implements OnInit{
     }
     else{
 
-      // this.authService.login(this.loginForm.value).pipe(
+      this.toastr.error('Please fill in all fields correctly.');
 
-      //   map()
-      // )
-     //Using Toastar
     }
 }
 }

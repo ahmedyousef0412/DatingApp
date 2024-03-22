@@ -1,16 +1,13 @@
-export class Register{
+import { Photo } from './photoDto';
+export interface Register{
     
     email: string;
     password: string;
     userName: string;
     dateOfBirth: Date;
     knowAs: string;
-    created: Date = new Date();
-    lastActive: Date = new Date();
     gender: string;
-    introduction: string;
-    lookingFor: string;
-    intrestes: string;
     city: string;
     country: string;
+    Photos:Photo[]
 }

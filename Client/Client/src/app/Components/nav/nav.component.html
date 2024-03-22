@@ -16,11 +16,12 @@
           <a class="nav-link" routerLink="/message" routerLinkActive="active">Messages</a>
         </li>
       </ng-container>
+     
        </ul> 
   
       <div *ngIf="isLogged" class="dropdown">
         <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          Welcome {{ userName|titlecase }}
+          Welcome {{ knowAs|titlecase }}
         </button>
         <div class="dropdown-menu mt-3">
           <a class="dropdown-item" href="#">Edit Profile</a>

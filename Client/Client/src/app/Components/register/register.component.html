@@ -82,39 +82,6 @@
                     </div>
 
 
-                    <div class="form-group pt-3">
-                        <div class="input-field" [class.error]="Introduction.hasError('required') &&
-                        (Introduction.touched || form.submitted)">
-                          <span class="fa fa-user p-2"> </span>  
-                          <input type="text" formControlName="introduction" class="form-control" placeholder="Introduction">
-                        </div>
-                        <span *ngIf="
-                        Introduction.hasError('required') &&
-                        (Introduction.touched || form.submitted)
-                      " class="p-1 error-msg small text-danger" role="alert">
-                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
-                                          Introduction is required
-                 </span>
-                    </div>
-
-
-
-
-
-                    <div class="form-group pt-3">
-                        <div class="input-field" [class.error]="Intrestes.hasError('required') &&
-                        (Intrestes.touched || form.submitted)">
-                       <span class="fa fa-heart p-2"></span> 
-                          <input type="text" formControlName="intrestes" class="form-control" placeholder="Intrestes">
-                        </div>
-                        <span *ngIf="
-                        Intrestes.hasError('required') &&
-                        (Intrestes.touched || form.submitted)
-                      " class="p-1 error-msg small text-danger" role="alert">
-                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
-                                          Intrestes is required
-                 </span>
-                    </div>
 
                     <div class="form-group pt-3">
                         <label for="gender" class="form-label">Gender</label>
@@ -132,23 +99,6 @@
                         </span>
                       </div>
                       
-
-
-                    <div class="form-group pt-3">
-                        <div class="input-field" [class.error]="LookingFor.hasError('required') &&
-                        (LookingFor.touched || form.submitted)">
-                          <span class="fa fa-user p-2"> </span>  
-                          <input type="text" formControlName="lookingFor" class="form-control" placeholder="LookingFor">
-                        </div>
-                        <span *ngIf="
-                        LookingFor.hasError('required') &&
-                        (LookingFor.touched || form.submitted)
-                      " class="p-1 error-msg small text-danger" role="alert">
-                                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
-                                          LookingFor is required
-                 </span>
-                    </div>
-
 
                     <div class="form-group pt-3">
                         <div class="input-field" [class.error]="City.hasError('required') &&

@@ -41,9 +41,6 @@ export class RegisterComponent implements OnInit {
     this.signUpForm = this.fb.group({
       knowAs: [null, Validators.required],
       gender: [null, Validators.required],
-      introduction: [null, Validators.required],
-      lookingFor: [null, Validators.required],
-      intrestes: [null, Validators.required],
       city: [null, Validators.required],
       country: [null, Validators.required],
       username: [null, Validators.required],
@@ -61,18 +58,7 @@ export class RegisterComponent implements OnInit {
 
     return this.signUpForm.get('gender') as FormControl;
   }
-  public get Introduction(): FormControl {
-
-    return this.signUpForm.get('introduction') as FormControl;
-  }
-  public get LookingFor(): FormControl {
-
-    return this.signUpForm.get('lookingFor') as FormControl;
-  }
-  public get Intrestes(): FormControl {
-
-    return this.signUpForm.get('intrestes') as FormControl;
-  }
+ 
   public get City(): FormControl {
 
     return this.signUpForm.get('city') as FormControl;

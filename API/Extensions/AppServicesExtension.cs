@@ -9,18 +9,22 @@ using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using API.Helper;
 
-namespace API.Helper;
+namespace API.Extensions;
 
 public static class AppServicesExtension
 {
 
-    public static IServiceCollection AddAppServices(this  IServiceCollection services , IConfiguration configuration)
+    public static IServiceCollection AddAppServices(this IServiceCollection services, IConfiguration configuration)
     {
 
         #region DP
 
         services.AddScoped<IAuthService, AuthService>();
+
+        //services.AddScoped<IUserRpository, UserRpository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         #endregion
 
@@ -39,7 +43,7 @@ public static class AppServicesExtension
         #region JWT Map
 
 
-       services.Configure<JWT>(configuration.GetSection("JWT"));
+        services.Configure<JWT>(configuration.GetSection("JWT"));
         #endregion
 
         #region JWT Config
@@ -71,6 +75,22 @@ public static class AppServicesExtension
 
         services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
         #endregion
+
+        #region Cors Policy
+
+
+        services.AddCors(options =>
+        {
+
+            options.AddPolicy("corsPolicy", builder =>
+            {
+                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+
+            });
+        });
+
+        #endregion
+
 
         return services;
     }
