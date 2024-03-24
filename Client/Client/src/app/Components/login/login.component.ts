@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit{
          this.authService.storeUserName(res.userName);
          this.authService.storeToken(res.token);
          this.authService.storeUserKnowAs(res.knowAs);
-         this.toastr.success(`Welcome : ${res.userName}`);
+        //  this.toastr.success(`Welcome : ${res.userName}`);
           // console.log("success");
        },
        error:(err)=>{

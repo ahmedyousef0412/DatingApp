@@ -43,6 +43,22 @@
   },
   {
     "ContainingType": "API.Controllers.UsersController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/Users",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "memberDto",
+        "Type": "API.DTOs.MemberDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsersController",
     "Method": "GetUser",
     "RelativePath": "api/Users/{userName}",
     "HttpMethod": "GET",

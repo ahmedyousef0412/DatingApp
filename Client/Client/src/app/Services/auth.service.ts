@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Auth } from '../models/authModel';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { Login } from '../models/LoginDto';
+import { User } from '../models/userDto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
 
 
   private baseUrl = `${environment.apiUrl}`;
-  private isLoggedInSubject = new BehaviorSubject<{ isLoggedIn: boolean, userName: string, knowAs: string }>(null);
+  private isLoggedInSubject = new BehaviorSubject<User>(null);
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {

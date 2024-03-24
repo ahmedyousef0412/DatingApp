@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace API.Controllers;
 
@@ -56,6 +57,28 @@ public class UsersController(ILogger<UsersController> logger, IMapper mapper, IU
             return NotFound();
 
         return Ok(user);
+
+    }
+
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateUser(MemberDto memberDto)
+    {
+        var userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        var user = await _unitOfWork.Users
+            .GetByUserNameAsync(u => u.UserName == userName, ["Photos"]);
+
+        _mapper.Map(memberDto, user);
+
+        _unitOfWork.Users.Update(user!);
+
+        if (await _unitOfWork.SaveChangesAsync()) 
+            return NoContent();
+
+
+        return BadRequest("Failed to update the user.");
+
 
     }
 }

@@ -7,5 +7,5 @@ public interface IUnitOfWork
 
     IBaseRepository<ApplicationUser> Users { get; }
 
-    Task<int> SaveChangesAsync();
+    Task<bool> SaveChangesAsync();
 }

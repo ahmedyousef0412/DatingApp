@@ -10,8 +10,9 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 
     public IBaseRepository<ApplicationUser> Users => new BaseRepository<ApplicationUser>(_context);
 
-    public async Task<int> SaveChangesAsync()
+    public async Task<bool> SaveChangesAsync()
     {
-        return await _context.SaveChangesAsync();
+        var savedEntitiesCount = await _context.SaveChangesAsync();
+        return savedEntitiesCount > 0;
     }
 }

@@ -7,6 +7,7 @@ import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { tokenInterceptor } from './Interceptors/token.interceptor';
 import { provideClientHydration } from '@angular/platform-browser';
+import { spinnerInterceptor } from './Interceptors/spinner.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,7 +22,7 @@ export const appConfig: ApplicationConfig = {
       progressBar: true,
     }),
     provideHttpClient(withInterceptors(
-      [tokenInterceptor])),
+      [tokenInterceptor,spinnerInterceptor])),
     
     
     
