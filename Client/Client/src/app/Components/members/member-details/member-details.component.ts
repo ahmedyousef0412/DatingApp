@@ -65,7 +65,7 @@ export class MemberDetailsComponent implements OnInit {
         width: '500px',
         height: '500px',
         imagePercent: 100,
-        thumbnailsColumns: 3,
+        thumbnailsColumns: 5,
         imageAnimation: NgxGalleryAnimation.Slide,
         preview: false
       }

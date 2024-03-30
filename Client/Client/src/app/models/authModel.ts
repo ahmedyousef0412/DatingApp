@@ -3,6 +3,7 @@ export class Auth{
       isAuthenticated:boolean; 
       userName :string;
       knowAs:string;
+      photoUrl:string;
       email :string;
       Roles :string[];
       token :string;

@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/NavBar']);
 
          this.signUpForm.reset();
-         this.authService.storeToken(res.token);
+         
          
           // this.toast.success({detail:"SUCCESS",summary:res.message , duration:5000});
           console.log("success");

@@ -1,8 +1,4 @@
-﻿using API.DTOs;
-using API.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
+﻿
 namespace API.Controllers;
 
 public class AccountController(IAuthService authService) : BaseApiController

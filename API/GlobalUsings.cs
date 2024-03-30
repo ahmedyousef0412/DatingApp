@@ -1,0 +1,17 @@
+﻿
+global using API.Const;
+global using API.Data;
+global using API.DTOs;
+global using API.Entities;
+global using API.Extensions;
+global using API.Interfaces;
+global using API.Middlewares;
+global using AutoMapper;
+global using AutoMapper.QueryableExtensions;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Http.HttpResults;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using System.Security.Claims;
+global using API.Interfaces.Implementation;

@@ -13,6 +13,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Photo> Photos { get; set; }
 
 
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
 

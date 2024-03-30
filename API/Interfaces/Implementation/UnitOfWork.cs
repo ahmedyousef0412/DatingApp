@@ -9,6 +9,7 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     private readonly ApplicationDbContext _context = context;
 
     public IBaseRepository<ApplicationUser> Users => new BaseRepository<ApplicationUser>(_context);
+    public IBaseRepository<Photo> Photos => new BaseRepository<Photo>(_context);
 
     public async Task<bool> SaveChangesAsync()
     {

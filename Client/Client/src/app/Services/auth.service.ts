@@ -6,7 +6,7 @@ import { Register } from '../models/RegisterDto';
 
 import { Router } from '@angular/router';
 import { Auth } from '../models/authModel';
-import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, catchError, map, take, tap, throwError } from 'rxjs';
 import { Login } from '../models/LoginDto';
 import { User } from '../models/userDto';
 
@@ -17,72 +17,46 @@ export class AuthService {
 
 
   private baseUrl = `${environment.apiUrl}`;
-  private isLoggedInSubject = new BehaviorSubject<User>(null);
-  isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private currentUserSource  = new ReplaySubject<User>(1);
+  currentUser$ = this.currentUserSource.asObservable();
+  token:string;
 
-  constructor(private http: HttpClient, private router: Router) {
-  
-    if (typeof window !== 'undefined' && window.localStorage) {
-      this.restoreAuthenticationState();
-    }
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
-  private restoreAuthenticationState(): void {
-    const token = this.getToken();
-    const userName =this.getUserName();
-    const knowAs = this.getUserKnowAs();
-    const isLoggedIn = !!token;
-    this.isLoggedInSubject.next({ isLoggedIn, userName,knowAs });
-  }
-
-
+ 
   //Register
   register(register: Register): Observable<Auth> {
     return this.http.post<Auth>(`${this.baseUrl}Account/Register`, register);
   }
 
-
   //Login
-  login(login: Login): Observable<Auth> {
-    return this.http.post<Auth>(`${this.baseUrl}Account/Login`, login).pipe(
-      tap((auth: Auth) => {
-        this.storeToken(auth.token);
-        this.isLoggedInSubject.next({ isLoggedIn: true, userName: auth.userName, knowAs: auth.knowAs });
-      }),catchError((err)=>{
-        return throwError(err)
-      })
+  login(login: Login) {
+    return this.http.post(`${this.baseUrl}Account/Login`, login).pipe(
+     map((res:Auth)=>{
+
+      const user = res;
+      if(user){
+        localStorage.setItem('user',JSON.stringify(user));
+        this.currentUserSource.next(user);
+      }
+     })
     );
   }
-
-  storeToken(token: string): void {
-    localStorage.setItem('token', token);
+ 
+  getToken(): Observable<string | null> {
+    return this.currentUser$.pipe(
+      take(1),
+      map((user) => user?.token) // Access token safely
+    );
   }
-
-  storeUserName(userName: string): void {
-    localStorage.setItem('userName', userName);
+  
+  setCurrentUser(user:User){
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUserSource.next(user);
   }
-  storeUserKnowAs(knowAs: string): void {
-    localStorage.setItem('knowAs', knowAs);
-  }
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
-  getUserName(): string | null {
-    return localStorage.getItem('userName');
-  }
-  getUserKnowAs(): string | null {
-    return localStorage.getItem('knowAs');
-  }
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
-
-  signOut(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('knowAs');
-    this.isLoggedInSubject.next({ isLoggedIn: false, userName: null,knowAs:null });
+  logOut(){
+    localStorage.removeItem('user');
+    this.currentUserSource.next(null);
     this.router.navigate(['Login']);
   }
 }

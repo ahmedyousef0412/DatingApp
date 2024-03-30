@@ -1,27 +1,15 @@
-﻿using API.Const;
-using API.Data;
-using API.DTOs;
-using API.Entities;
-using API.Interfaces;
-using API.Middlewares;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+﻿
 
 namespace API.Controllers;
 
 [Authorize(Roles = AppRoles.Member)]
-public class UsersController(ILogger<UsersController> logger, IMapper mapper, IUnitOfWork unitOfWork) : BaseApiController
+public class UsersController(IMapper mapper, IUnitOfWork unitOfWork) : BaseApiController
 {
 
 
     private readonly IMapper _mapper = mapper;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
+  
 
     [HttpGet("")]
     public async Task<IActionResult> GetUsers()
@@ -64,10 +52,10 @@ public class UsersController(ILogger<UsersController> logger, IMapper mapper, IU
     [HttpPut]
     public async Task<IActionResult> UpdateUser(MemberDto memberDto)
     {
-        var userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userName = User.GetUserName();
 
         var user = await _unitOfWork.Users
-            .GetByUserNameAsync(u => u.UserName == userName, ["Photos"]);
+            .GetByUserNameAsync(u => u.UserName == userName, [Includes.Photo]);
 
         _mapper.Map(memberDto, user);
 
@@ -77,8 +65,11 @@ public class UsersController(ILogger<UsersController> logger, IMapper mapper, IU
             return NoContent();
 
 
-        return BadRequest("Failed to update the user.");
+        return BadRequest(Errors.UserNotUpdated);
 
 
     }
+
+
+  
 }

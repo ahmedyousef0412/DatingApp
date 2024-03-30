@@ -3,7 +3,9 @@
       <a class="navbar-brand" routerLink="/" routerLinkActive="active">Dating App</a>
   
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <ng-container  *ngIf="isLogged">
+        
+          <ng-container  *ngIf="(authService.currentUser$ | async)">
+        
 
         
         <li class="nav-item">
@@ -19,11 +21,14 @@
      
        </ul> 
   
-      <div *ngIf="isLogged" class="dropdown">
-        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          Welcome {{ knowAs|titlecase }}
+      <div *ngIf="(authService.currentUser$ | async) as user" class="dropdown" dropdown>
+      
+        <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.userName}}">
+        <button class="btn btn-success dropdown-toggle text-light mx-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          Welcome {{user. knowAs|titlecase }}
         </button>
         <div class="dropdown-menu mt-3">
+          
           <a class="dropdown-item" routerLink='/Member/edit'>Edit Profile</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="logout()">Logout</a>

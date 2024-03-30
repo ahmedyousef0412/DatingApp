@@ -6,6 +6,7 @@ using API.Helper;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,29 +16,21 @@ using System.Text;
 
 namespace API.Interfaces.Implementation;
 
-public class AuthService : IAuthService
+public class AuthService(IOptions<JWT> jwt,
+    UserManager<ApplicationUser> userManager, IMapper mapper) : IAuthService
 {
  
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IMapper _mapper;
-    private readonly JWT _jwt;
-    public AuthService( IOptions<JWT> jwt,
-        UserManager<ApplicationUser> userManager, IMapper mapper)
-    {
-       
-        _jwt = jwt.Value;
-        _userManager = userManager;
-        _mapper = mapper;
-    }
-
+    private readonly UserManager<ApplicationUser> _userManager = userManager;
+    private readonly IMapper _mapper = mapper;
+    private readonly JWT _jwt = jwt.Value;
 
     public async Task<AuthModel> RgisterAsync(RegisterDto model)
     {
         if (await _userManager.FindByEmailAsync(model.Email) is not null)
-            return new AuthModel { Message = "Email is already exist!" };
+            return new AuthModel { Message = Errors.EmailDuplicated };
 
         if(await _userManager.FindByNameAsync(model.Username) is not null)
-            return new AuthModel { Message = "UserName is already exist!" };
+            return new AuthModel { Message = Errors.UserExistBefore };
 
         var user = _mapper.Map<ApplicationUser>(model);
 
@@ -76,11 +69,13 @@ public class AuthService : IAuthService
         var authModel = new AuthModel();
 
 
-        var user = await _userManager.FindByEmailAsync(model.Email);
+        var user = await _userManager.Users.Include(u => u.Photos)
+            .FirstOrDefaultAsync(u => u.Email == model.Email);
+
 
         if (user is null || !await _userManager.CheckPasswordAsync(user, model.Password))
         {
-            authModel.Message = "Email or Password is Incorrect";
+            authModel.Message = Errors.EmailOrPasswordIncorrect;
             return authModel;
         }
 
@@ -95,6 +90,7 @@ public class AuthService : IAuthService
         authModel.Email = user.Email!;
         authModel.UserName = user.UserName!;
         authModel.KnowAs = user.KnowAs!;
+        authModel.PhotoUrl = user.Photos.FirstOrDefault(u => u.IsMain)!.Url;
         authModel.ExpiresOn = jwtSecurityToken.ValidTo;
 
         authModel.Roles = roles.ToList();

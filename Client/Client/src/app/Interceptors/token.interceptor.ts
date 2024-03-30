@@ -10,16 +10,21 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
   const toastr: ToastrService = inject(ToastrService);
-
-  const token = authService.getToken();
-
-  if (token) {
-    req = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-  }
+   let token: any;
+   authService.getToken().subscribe((token) =>{
+    token = token;
+    console.log(token);
+    if (token) {
+      req = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    }
+   });
+  
+  
+ 
 
   return next(req);
 };

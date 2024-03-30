@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { PhotoUploaderComponent } from '../../photo-uploader/photo-uploader.component';
 
 @Component({
   selector: 'app-member-edit',
   standalone: true,
-  imports: [CommonModule, TabsModule, FormsModule],
+  imports: [CommonModule, TabsModule, FormsModule,PhotoUploaderComponent],
   templateUrl: './member-edit.component.html',
   styleUrl: './member-edit.component.css'
 })
@@ -32,7 +33,7 @@ export class MemberEditComponent implements OnInit {
   constructor(private authService: AuthService
     , private userService: UsersService
     , private toastr: ToastrService) {
-    this.authService.isLoggedIn$.pipe(take(1)).subscribe((user) => {
+    this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
       this.user = user;
     })
   }

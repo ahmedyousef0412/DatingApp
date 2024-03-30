@@ -58,10 +58,11 @@ export class LoginComponent implements OnInit{
         this.router.navigate(['/members']);
 
          this.loginForm.reset();
-
-         this.authService.storeUserName(res.userName);
-         this.authService.storeToken(res.token);
-         this.authService.storeUserKnowAs(res.knowAs);
+        
+        //  this.authService.storeUserName(res.userName);
+        //  this.authService.storeToken(res.token);
+        //  this.authService.storeUserKnowAs(res.knowAs);
+        //  this.authService.storeUserPhotoUrl(res.photoUrl);
         //  this.toastr.success(`Welcome : ${res.userName}`);
           // console.log("success");
        },

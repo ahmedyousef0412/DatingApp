@@ -4,6 +4,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
 import { HomeComponent } from "../home/home.component";
+import { Observable } from 'rxjs';
+import { User } from '../../models/userDto';
 
 @Component({
     selector: 'app-nav',
@@ -17,19 +19,17 @@ export class NavComponent implements OnInit  {
   isLogged: boolean = false;
   userName: string;
   knowAs:string;
+  photoUrl:string;
 
-  constructor(private authService: AuthService) {}
+  currentUser$:Observable<User>;
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService.isLoggedIn$.subscribe(({ isLoggedIn, userName,knowAs }) => {
-      this.isLogged = isLoggedIn;
-      this.userName = userName;
-      this.knowAs = knowAs;
-    });
+  
   }
 
   logout(): void {
-    this.authService.signOut();
+    this.authService.logOut();
     this.isLogged = false;
   }
 }

@@ -32,6 +32,64 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.PhotosController",
+    "Method": "DeleteImage",
+    "RelativePath": "api/Photos/DeletePhoto/{photoId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "photoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.PhotosController",
+    "Method": "SetMainPhoto",
+    "RelativePath": "api/Photos/SetMain/{photoId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "photoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.PhotosController",
+    "Method": "UploadImage",
+    "RelativePath": "api/Photos/UploadPhoto",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "API.DTOs.PhotoDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "API.Controllers.UsersController",
     "Method": "GetUsers",
     "RelativePath": "api/Users",

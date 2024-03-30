@@ -91,7 +91,16 @@ public static class AppServicesExtension
 
         #endregion
 
+        
+        #region Cloudinary
 
+        services.Configure<CloudinarySettings>(configuration.GetSection(nameof(CloudinarySettings)));
+
+        services.AddScoped<IImageService, ImageService>();
+
+        #endregion
+       
+        
         return services;
     }
 }
