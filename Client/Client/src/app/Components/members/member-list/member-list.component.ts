@@ -16,13 +16,18 @@ import { Observable } from 'rxjs';
 export class MemberListComponent implements OnInit {
 
   users$: Observable<Member[]>;
-  users: Member[] = [];
+  users: Member[];
 
   constructor(private userService: UsersService, private toastr: ToastrService) {}
   
   ngOnInit(): void {
-    this.userService.getMembers().subscribe((members: Member[]) => {
-      this.users = members; // Assign the emitted data to the users array
-    });
+  this.loadMembers();
+}
+
+
+loadMembers(){
+  this.userService.getMembers().subscribe((members: Member[]) => {
+    this.users = members; // Assign the emitted data to the users array
+  });
 }
 }

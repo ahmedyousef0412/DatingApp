@@ -16,7 +16,7 @@ export class UsersService {
 
   getMembers() {
 
-    //first will check n the list of Members 
+    //first will check on the list of Members 
     if (this.members.length > 0)
       return of(this.members);
 
@@ -28,18 +28,21 @@ export class UsersService {
       })
     );
   }
+
   getMember(userName: string) {
 
     //Check if no member will send request , else will return the member already exist.
-    const member = this.members.find(m => m.userName === userName);
-    if (member !== undefined)
-      return of(member);
-
+    const existingMember = this.members.find(m => m.userName === userName);
+    if (existingMember)
+      return of(existingMember);
+    //else
     return this.http.get<Member>(`${this.baseUrl}Users/${userName}`);
   }
+
+
   updateMember(member: Member) {
     return this.http.put(`${this.baseUrl}Users`, member).pipe(
-      map(()=>{
+      map(() => {
         const index = this.members.indexOf(member);
         this.members[index] = member;
       })

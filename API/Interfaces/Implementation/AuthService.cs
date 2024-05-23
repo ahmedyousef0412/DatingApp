@@ -1,17 +1,4 @@
-﻿using API.Const;
-using API.Data;
-using API.DTOs;
-using API.Entities;
-using API.Helper;
-using API.Models;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+﻿
 
 
 namespace API.Interfaces.Implementation;
@@ -34,6 +21,19 @@ public class AuthService(IOptions<JWT> jwt,
 
         var user = _mapper.Map<ApplicationUser>(model);
 
+
+
+        if (user.Photos.Count == 0) 
+        {
+            var photo = new Photo
+            {
+                PublicId = Guid.NewGuid().ToString(),
+                Url = CloudinaryDefaultImage.DefaultImage,
+                IsMain = true
+            };
+            user.Photos.Add(photo);
+        }
+
         var result = await _userManager.CreateAsync(user, model.Password);
 
         if (!result.Succeeded)
@@ -48,6 +48,7 @@ public class AuthService(IOptions<JWT> jwt,
         }
 
 
+
         await _userManager.AddToRoleAsync(user, AppRoles.Member);
 
         var jwtToken = await CreateJwtToken(user);
@@ -60,6 +61,7 @@ public class AuthService(IOptions<JWT> jwt,
             IsAuthenticated = true,
             Roles = new List<string> { AppRoles.Member },
             Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
+           
             UserName = user.UserName
         };
     }
@@ -90,7 +92,8 @@ public class AuthService(IOptions<JWT> jwt,
         authModel.Email = user.Email!;
         authModel.UserName = user.UserName!;
         authModel.KnowAs = user.KnowAs!;
-        authModel.PhotoUrl = user.Photos.FirstOrDefault(u => u.IsMain)!.Url;
+        //authModel.PhotoUrl = user.Photos.FirstOrDefault(u => u.IsMain).Url;
+        authModel.PhotoUrl = user.Photos.FirstOrDefault(u => u.IsMain).Url;
         authModel.ExpiresOn = jwtSecurityToken.ValidTo;
 
         authModel.Roles = roles.ToList();

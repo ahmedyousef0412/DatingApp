@@ -9,6 +9,6 @@ public class AuthModel
     public string KnowAs { get; set; }
     public List<string> Roles { get; set; }
     public string Token { get; set; }
-    public string PhotoUrl { get; set; }
+    public string? PhotoUrl { get; set; }
     public DateTime ExpiresOn { get; set; }
 }

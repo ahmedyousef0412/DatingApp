@@ -28,18 +28,22 @@ export class PhotoUploaderComponent implements OnInit {
   baseUrl = environment.apiUrl;
   user: User;
   token: string;
-  
 
-  constructor(private authService: AuthService,private photoService:PhotoUploaderService) {
+
+  constructor(private authService: AuthService, private photoService: PhotoUploaderService) {
     this.authService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
   }
 
   ngOnInit(): void {
     this.initializeUploader();
   }
+
+
   fileOverBase(e: any) {
     this.hasBaseDropzoneOver = e;
   }
+
+
   initializeUploader() {
     this.uploader = new FileUploader({
       url: this.baseUrl + 'Photos/UploadPhoto',
@@ -62,23 +66,29 @@ export class PhotoUploaderComponent implements OnInit {
       }
     }
   }
+
+
   setMainPhoto(photo: Photo) {
     this.photoService.setMainPhoto(photo.id).subscribe(() => {
-      this.user.photoUrl = photo.url;
-      this.authService.setCurrentUser(this.user);
-      this.member.photoUrl = photo.url;
+      this.user.photoUrl = photo.url; //  Update user photo 
+      this.authService.setCurrentUser(this.user); // Send the new Updated user data to Subject. 
+      this.member.photoUrl = photo.url; // Change the member card photo
       this.member.photos.forEach(p => {
         if (p.isMain) p.isMain = false;
+
+        // if the current photo's id matches the newly set main photo's id.
+        // If they match, it sets isMain to true to mark the new photo as the main one
         if (p.id === photo.id) p.isMain = true;
+
       })
     })
-  } 
+  }
 
 
-  deletePhoto(photoId:number){
-    this.photoService.deletePhoto(photoId).subscribe(()=>{
-      
-      this.member.photos = this.member.photos.filter(p =>p.id !== photoId);
+  deletePhoto(photoId: number) {
+    this.photoService.deletePhoto(photoId).subscribe(() => {
+
+      this.member.photos = this.member.photos.filter(p => p.id !== photoId);
     })
   }
 }

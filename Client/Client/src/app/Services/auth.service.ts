@@ -15,48 +15,61 @@ import { User } from '../models/userDto';
 })
 export class AuthService {
 
-
   private baseUrl = `${environment.apiUrl}`;
-  private currentUserSource  = new ReplaySubject<User>(1);
+  
+  private currentUserSource = new BehaviorSubject<User>(null);
   currentUser$ = this.currentUserSource.asObservable();
-  token:string;
-
-  constructor(private http: HttpClient, private router: Router) {}
-
- 
-  //Register
-  register(register: Register): Observable<Auth> {
-    return this.http.post<Auth>(`${this.baseUrl}Account/Register`, register);
-  }
+  token: string;
+  
+  constructor(private http: HttpClient, private router: Router) { }
 
   //Login
+
   login(login: Login) {
     return this.http.post(`${this.baseUrl}Account/Login`, login).pipe(
-     map((res:Auth)=>{
+      map((res: Auth) => {
 
-      const user = res;
-      if(user){
-        localStorage.setItem('user',JSON.stringify(user));
-        this.currentUserSource.next(user);
-      }
-     })
+        const user = res;
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user); //updates a state management mechanism
+        }
+      })
     );
   }
- 
+
+
+
+  //Register
+  register(register: Register) {
+    return this.http.post(`${this.baseUrl}Account/Register`, register).pipe(
+      map((user: Auth) => {
+        if (user) {
+          this.currentUserSource.next(user);
+        }
+      })
+    );
+  }
+
   getToken(): Observable<string | null> {
     return this.currentUser$.pipe(
       take(1),
       map((user) => user?.token) // Access token safely
     );
   }
-  
-  setCurrentUser(user:User){
+
+
+  setCurrentUser(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
-  logOut(){
+
+
+  logOut() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
     this.router.navigate(['Login']);
   }
+
+
 }

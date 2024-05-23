@@ -30,6 +30,7 @@ public class Errors
     public const string UserNotDeleted = "UserNotDeleted";
     public const string EmailDuplicated = "Email is already exist!";
     public const string EmailOrPasswordIncorrect = "Email or Password is Incorrect";
+    public const string ConfirmPassword = "Confirm Password aren't match the password";
 
     #endregion
 }

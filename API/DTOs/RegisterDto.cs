@@ -1,10 +1,15 @@
-﻿namespace API.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.DTOs;
 
 public class RegisterDto
 {
      public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string Password { get; set; } = null!;
+
+    [Compare(nameof(Password),ErrorMessage = Errors.ConfirmPassword)]
+    public string ConfirmPassword { get; set; } = null!;
     public string KnowAs { get; set; } = null!;
      public string Gender { get; set; } = null!;
     public DateTime DateOfBirth { get; set; }

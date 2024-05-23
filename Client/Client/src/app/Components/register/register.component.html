@@ -27,9 +27,10 @@
                                                   <i class="fa fa-exclamation-circle text-danger me-2"></i>
                                                   Username is required
                          </span>
-                       
+                        
                     </div>
-
+                    
+                    
                 
 
                     <div class="form-group pt-3">
@@ -67,6 +68,22 @@
 
 
                     <div class="form-group pt-3">
+                      <div class="input-field" [class.error]="confirmPassword.hasError('required') &&
+                      (confirmPassword.touched || form.submitted)">
+                        <span class="fa fa-lock p-2"> </span>  
+                        <input type="password" formControlName="confirmPassword" class="form-control" placeholder="confirmPassword">
+                       
+                      </div>
+                      <span *ngIf="
+                      Password.hasError('required') &&
+                      (confirmPassword.touched || form.submitted)
+                    " class="p-1 error-msg small text-danger" role="alert">
+                                        <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                                        confirmPassword is required
+               </span>
+                  </div>
+
+                    <div class="form-group pt-3">
                         <div class="input-field" [class.error]="KnowAs.hasError('required') &&
                         (KnowAs.touched || form.submitted)">
                           <span class="fa fa-user p-2"> </span>  
@@ -82,24 +99,26 @@
                     </div>
 
 
-
                     <div class="form-group pt-3">
-                        <label for="gender" class="form-label">Gender</label>
-                        <div  class="input-field" [class.error]="Gender.hasError('required') && (Gender.touched || form.submitted)">
-                            <span class="fa fa-venus-mars p-2"></span>
-                          <select formControlName="gender"  class="form-control"  required>
-                            <option value=" " disabled selected hidden>Choose Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                          </select>
+                      <label for="gender" class="form-label">Gender</label>
+                      <div class="input-field" [class.error]="Gender.hasError('required') && (Gender.touched || form.submitted)">
+                        <span class="fa fa-venus-mars p-2"></span>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="male" formControlName="gender" value="male" required>
+                          <label class="form-check-label" for="male">Male</label>
                         </div>
-                        <span *ngIf="Gender.hasError('required') && (Gender.touched || form.submitted)" class="p-1 error-msg small text-danger" role="alert">
-                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
-                          Gender is required
-                        </span>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="female" formControlName="gender" value="female" required>
+                          <label class="form-check-label" for="female">Female</label>
+                        </div>
                       </div>
+                      <span *ngIf="Gender.hasError('required') && (Gender.touched || form.submitted)" class="p-1 error-msg small text-danger" role="alert">
+                        <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                        Gender is required
+                      </span>
+                    </div>
+                     
                       
-
                     <div class="form-group pt-3">
                         <div class="input-field" [class.error]="City.hasError('required') &&
                         (City.touched || form.submitted)">
@@ -135,17 +154,23 @@
 
 
                     <div class="form-group pt-3">
-                        <label for="dateOfBirth" class="form-label">Date of Birth</label>
-                        <div class="input-field" [class.error]="DateOfBirth.hasError('required') && (DateOfBirth.touched || form.submitted)">
-                          <span class="fa fa-calendar p-2"></span>
-                          <input type="date" formControlName="dateOfBirth" class="form-control" id="dateOfBirth" placeholder="Date of Birth" max="{{ maxDate }}">
-                        </div>
-                        <span *ngIf="DateOfBirth.hasError('required') && (DateOfBirth.touched || form.submitted)" class="p-1 error-msg small text-danger" role="alert">
-                          <i class="fa fa-exclamation-circle text-danger me-2"></i>
-                          Date of Birth is required
-                        </span>
+                      <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                      <div class="input-field" [class.error]="DateOfBirth.invalid && (DateOfBirth.touched || form.submitted)">
+                        <span class="fa fa-calendar p-2"></span>
+                        <mat-form-field>
+                          <mat-label>Choose a date</mat-label>
+                          <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" id="dateOfBirth">
+                          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                        </mat-form-field>
                       </div>
-                  
+                      <span *ngIf="DateOfBirth.invalid && (DateOfBirth.touched || form.submitted)" class="p-1 error-msg small text-danger" role="alert">
+                        <i class="fa fa-exclamation-circle text-danger me-2"></i>
+                        Date of Birth is required
+                      </span>
+                    </div>
+                    
+                    
                     <button type="submit" [disabled]="form.invalid" class="btn btn-primary btn-block mt-4 w-100">Sign Up</button>
 
                     <div class="text-center pt-4 text-muted">

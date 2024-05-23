@@ -1,23 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule,RouterLink,ReactiveFormsModule],
+  providers: [provideNativeDateAdapter()],
+  imports: [CommonModule,RouterLink,ReactiveFormsModule,
+    MatFormFieldModule, MatInputModule, MatDatepickerModule  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
 
   maxDate: string;
-  signUpForm!: FormGroup;
+  signUpForm: FormGroup;
 
   constructor(private fb: FormBuilder,
      private router: Router,
@@ -33,21 +38,31 @@ export class RegisterComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.initSignUpForm();
+    this.initializeSignUpForm();
   }
+ 
 
-
-  private initSignUpForm(): void {
+  private initializeSignUpForm(): void {
     this.signUpForm = this.fb.group({
+      username: [null, Validators.required],
+      email: [null, Validators.required],
+      password: [null, [Validators.required,Validators.min(6)]],
+      confirmPassword: [null, [Validators.required , this.matchValue('password')]],
       knowAs: [null, Validators.required],
       gender: [null, Validators.required],
       city: [null, Validators.required],
       country: [null, Validators.required],
-      username: [null, Validators.required],
-      email: [null, Validators.required],
-      password: [null, Validators.required],
+     
       dateOfBirth: [null, Validators.required]
     });
+  }
+
+
+
+  matchValue(matchTo:string):ValidatorFn{
+    return (control:AbstractControl) =>{
+      return control?.value === control?.parent?.controls[matchTo].value ? null : {isMatching:true}
+    }
   }
 
   public get KnowAs(): FormControl {
@@ -78,12 +93,18 @@ export class RegisterComponent implements OnInit {
   public get Password(): FormControl {
 
     return this.signUpForm.get('password') as FormControl;
+  
+  } public get confirmPassword(): FormControl {
+
+    return this.signUpForm.get('confirmPassword') as FormControl;
   }
   public get DateOfBirth(): FormControl {
 
     return this.signUpForm.get('dateOfBirth') as FormControl;
   }
-
+  
+    startDate = new Date(1996,1,1);
+  
   onSubmit(){
     if (this.signUpForm.valid) {
       console.log(this.signUpForm.value);
@@ -91,7 +112,7 @@ export class RegisterComponent implements OnInit {
   
       this.authService.register(this.signUpForm.value).subscribe({
         next:(res)=>{
-          this.router.navigate(['/NavBar']);
+          this.router.navigateByUrl('/members');
 
          this.signUpForm.reset();
          

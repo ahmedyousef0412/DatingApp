@@ -1,4 +1,6 @@
 ﻿
+using API.Models;
+
 namespace API.Controllers;
 
 public class AccountController(IAuthService authService) : BaseApiController
@@ -36,6 +38,8 @@ public class AccountController(IAuthService authService) : BaseApiController
 
         var result = await _authService.LoginAsync(model);
 
+
+        
 
         if (!result.IsAuthenticated)
             return BadRequest(result.Message);
