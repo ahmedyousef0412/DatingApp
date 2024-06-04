@@ -3,48 +3,52 @@
 namespace API.Controllers;
 
 [Authorize(Roles = AppRoles.Member)]
-public class UsersController(IMapper mapper, IUnitOfWork unitOfWork) : BaseApiController
+public class UsersController(IMapper mapper, IUnitOfWork unitOfWork ) : BaseApiController
 {
 
 
     private readonly IMapper _mapper = mapper;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
-  
+    //private readonly IUserRpository _userRpository = userRpository;
 
+
+   
     [HttpGet("")]
-    public async Task<IActionResult> GetUsers()
+    public async Task<IActionResult> GetUsers([FromQuery] PaginationParameters parameters)
     {
-        var query = await _unitOfWork.Users
-                                 .GetQueryable()
-                                 .Include(u => u.Photos)
-                                 .AsNoTracking()
-                                 .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
-                                 .ToListAsync();
-                               
 
-       
-        var usersDto = _mapper.Map<IEnumerable<UserDto>>(query);
+        var user = await _unitOfWork.UserRpository.GetUserByNameAsync(User.GetUserName());
 
-        return Ok(usersDto);
+        parameters.CurrentUserName = user.Data.UserName;
+        //parameters.CurrentUserName = user.UserName;
+
+        if (string.IsNullOrEmpty(parameters.Gender))
+            //parameters.Gender = user.Gender == "male" ? "female" : "male";
+            parameters.Gender = user.Data.Gender == "male" ? "female" : "male";
+
+        var users = await _unitOfWork.UserRpository.GetUsersAsync(parameters);
+
+        Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+
+        return Ok(users);
+
     }
 
 
-
+    
     [HttpGet("{userName}")]
     public async Task<IActionResult> GetUser(string userName)
     {
-        var user = await _unitOfWork.Users
-            .GetQueryable()
-            .Where(u => u.UserName == userName)
-            .Include(u => u.Photos)
-            .AsNoTracking()
-            .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync();
+
+        //var user = await _userRpository.GetUserByNameAsync(userName);
+        var user = await _unitOfWork.UserRpository.GetUserByNameAsync(userName);
 
         if (user is null)
             return NotFound();
+        var userDto = _mapper.Map<UserDto>(user.Data);
+        return Ok(userDto);
 
-        return Ok(user);
+
 
     }
 
@@ -61,7 +65,7 @@ public class UsersController(IMapper mapper, IUnitOfWork unitOfWork) : BaseApiCo
 
         _unitOfWork.Users.Update(user!);
 
-        if (await _unitOfWork.SaveChangesAsync()) 
+        if (await _unitOfWork.Complete()) 
             return NoContent();
 
 

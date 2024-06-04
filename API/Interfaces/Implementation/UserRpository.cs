@@ -8,27 +8,53 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Interfaces.Implementation;
 
-public class UserRpository : IUserRpository
+public class UserRpository(ApplicationDbContext context, IMapper mapper) : IUserRpository
 {
 
 
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-    public UserRpository(ApplicationDbContext context, IMapper mapper )
+    private readonly ApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
+
+    public async Task<PageList<UserDto>> GetUsersAsync(PaginationParameters paginationParameters)
     {
-        _context = context;
-        _mapper = mapper;
-    }
-    public async Task<IEnumerable<UserDto>> GetUsersAsync()
-    {
-        var users = await _context.Users
-            .AsNoTracking()
+
+
+        var query = _context.Users.AsQueryable();
+
+
+        //Filter By UserName and Gender
+        query = query.Where(u => u.UserName != paginationParameters.CurrentUserName);
+        query = query.Where(u => u.Gender == paginationParameters.Gender);
+
+
+
+        var currentDate = DateTime.Today;
+
+
+        //Max BirthDate => representing the maximum birth date Example => 1980
+        //Min BirthDate => representing the minimum birth date Example => 2004
+
+        var maxBirthdate = currentDate.AddYears(-paginationParameters.MinAge); //20 [04]
+        var minBirthdate = currentDate.AddYears(-paginationParameters.MaxAge); //19 [79]
+        
+
+        //Filter By BirthDate
+        //                                    1997         1979                              2004
+        query = query.Where(u => u.DateOfBirth >= minBirthdate && u.DateOfBirth <= maxBirthdate);
+
+
+
+        query = paginationParameters.OrderBy switch
+        {
+            "created" => query.OrderByDescending(u => u.Created),
+            _ => query.OrderByDescending(u => u.LastActive)
+        };
+
+        return await PageList<UserDto>.CreateAsync(query
             .Include(p => p.Photos)
-            .ToListAsync();
-
-        var userDto = _mapper.Map<IEnumerable<UserDto>>(users);
-
-        return userDto;
+             .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking(),
+            paginationParameters.PageNumber, paginationParameters.PageSize);
 
 
     }
@@ -38,51 +64,46 @@ public class UserRpository : IUserRpository
     {
 
         return _context.Users;
-        
+
     }
 
-    public async Task<Result<UserDto>> GetUserByIdAsync(string id)
+    public async Task<Result<ApplicationUser>> GetUserByIdAsync(string id)
     {
-        var user = await _context.Users
-             .Include(u => u.Photos)
-             .SingleOrDefaultAsync(u => u.Id == id);
+        var user = await _context.Users.FindAsync(id);   
+             
 
 
         if (user is null)
-            return Result<UserDto>.Failure(Errors.UserNotFound);
+            return Result<ApplicationUser>.Failure(Errors.UserNotFound);
 
-        var userDto = _mapper.Map<UserDto>(user);
+        
 
-        return Result<UserDto>.Success(userDto);
-     
+        return Result<ApplicationUser>.Success(user);
+
     }
 
-    public async Task<Result<UserDto>> GetUserByNameAsync(string userName)
+    public async Task<Result<ApplicationUser>> GetUserByNameAsync(string userName)
     {
+
         var user = await _context.Users
-            .Include(u => u.Photos)
-            .SingleOrDefaultAsync(u => u.UserName == userName);
+              .Include(p => p.Photos)
+              .SingleOrDefaultAsync(x => x.UserName == userName);
 
-        if(user is null)
-            return Result<UserDto>.Failure(Errors.UserNotFound);
+        if (user is null)
+            return Result<ApplicationUser>.Failure(Errors.UserNotFound);
 
-
-        var userDto = _mapper.Map<UserDto>(user);
-
-        return Result<UserDto>.Success(userDto);
+        return Result<ApplicationUser>.Success(user);
+        //return await _context.Users
+        //      .Include(p => p.Photos)
+        //      .SingleOrDefaultAsync(x => x.UserName == userName);
     }
 
-    
 
-    public async Task<bool> SaveAllAsync()
-    {
-        return await _context.SaveChangesAsync() > 0;
-    }
 
     public void Update(UserDto user)
     {
         _context.Entry(user).State = EntityState.Modified;
     }
-
+    
    
 }

@@ -1,15 +1,7 @@
-﻿using API.Data;
-using API.Entities;
-using API.Interfaces.Implementation;
-using API.Interfaces;
-using API.Mapping;
+﻿using API.Mapping;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
+
 using System.Reflection;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using API.Helper;
 
 namespace API.Extensions;
 
@@ -21,12 +13,16 @@ public static class AppServicesExtension
 
         #region DP
 
-        services.AddScoped<IAuthService, AuthService>();
-
-        //services.AddScoped<IUserRpository, UserRpository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IAuthService, AuthService>();
+        //services.AddScoped<IUserRpository, UserRpository>();
+        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
         #endregion
+
+
+        services.AddScoped<LogUserActivity>();
+
 
         #region Connection String
 

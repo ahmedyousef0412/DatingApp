@@ -21,10 +21,10 @@
           <strong>Location:</strong>
           <p>{{ member.city }}, {{ member.country }}</p>
         </div>
-
+       
         <div>
           <strong>Last Active:</strong>
-          <p>{{ member.lastActive | date }}</p>
+          <p>{{ member.lastActive | amTimeAgo }}</p>
         </div>
         <div>
           <strong>Member since:</strong>

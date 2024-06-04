@@ -38,7 +38,7 @@ public class PhotosController(IUnitOfWork unitOfWork,IMapper mapper,IImageServic
         user.Photos.Add(photo);
 
 
-        if (await _unitOfWork.SaveChangesAsync())
+        if (await _unitOfWork.Complete())
             return  _mapper.Map<PhotoDto>(photo);
         
 
@@ -67,7 +67,7 @@ public class PhotosController(IUnitOfWork unitOfWork,IMapper mapper,IImageServic
 
         photo.IsMain = true;
 
-        if (await _unitOfWork.SaveChangesAsync())
+        if (await _unitOfWork.Complete())
             return NoContent();
 
 
@@ -98,7 +98,7 @@ public class PhotosController(IUnitOfWork unitOfWork,IMapper mapper,IImageServic
 
         _unitOfWork.Photos.Remove(photo);
 
-        if (await _unitOfWork.SaveChangesAsync())
+        if (await _unitOfWork.Complete())
             return NoContent();
 
         return BadRequest(Errors.FailedToDeletePhoto);

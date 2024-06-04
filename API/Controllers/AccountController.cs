@@ -1,6 +1,4 @@
 ﻿
-using API.Models;
-
 namespace API.Controllers;
 
 public class AccountController(IAuthService authService) : BaseApiController
@@ -18,6 +16,10 @@ public class AccountController(IAuthService authService) : BaseApiController
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
+
+       
+
+
         if (!ModelState.IsValid)
             return BadRequest(dto);
 

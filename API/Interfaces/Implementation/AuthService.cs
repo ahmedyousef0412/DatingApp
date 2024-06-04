@@ -57,6 +57,7 @@ public class AuthService(IOptions<JWT> jwt,
         {
             Email = user.Email,
             KnowAs = user.KnowAs,
+            Gender = user.Gender,
             ExpiresOn = jwtToken.ValidTo,
             IsAuthenticated = true,
             Roles = new List<string> { AppRoles.Member },
@@ -92,6 +93,7 @@ public class AuthService(IOptions<JWT> jwt,
         authModel.Email = user.Email!;
         authModel.UserName = user.UserName!;
         authModel.KnowAs = user.KnowAs!;
+        authModel.Gender = user.Gender;
         //authModel.PhotoUrl = user.Photos.FirstOrDefault(u => u.IsMain).Url;
         authModel.PhotoUrl = user.Photos.FirstOrDefault(u => u.IsMain).Url;
         authModel.ExpiresOn = jwtSecurityToken.ValidTo;
@@ -122,9 +124,12 @@ public class AuthService(IOptions<JWT> jwt,
 
         var claims = new[]
         {
-                new Claim (JwtRegisteredClaimNames.Sub ,user.UserName!),
+                new Claim (JwtRegisteredClaimNames.UniqueName ,user.UserName!),
+                new Claim (JwtRegisteredClaimNames.NameId ,user.Id!),
+            
                 new Claim (JwtRegisteredClaimNames.Email ,user.Email!),
-                new Claim ("uid" ,user.Id!),
+
+           
                 new Claim("knowAs",user.KnowAs)
         }
         .Union(userClaims).Union(claimRoles);

@@ -25,7 +25,5 @@ export const appConfig: ApplicationConfig = {
       [tokenInterceptor,spinnerInterceptor])),
     
     
-    
-
   ],
 };

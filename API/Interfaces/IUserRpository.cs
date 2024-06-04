@@ -7,14 +7,14 @@ namespace API.Interfaces;
 public interface IUserRpository
 {
 
-    Task<IEnumerable<UserDto>> GetUsersAsync();
+    Task<PageList<UserDto>> GetUsersAsync(PaginationParameters paginationParameters);
 
     IQueryable<ApplicationUser>  GetQueryable();
-    Task<Result<UserDto>> GetUserByIdAsync(string id);
-    Task<Result<UserDto>> GetUserByNameAsync(string userName);
+    Task<Result<ApplicationUser>> GetUserByIdAsync(string id);
+    Task<Result<ApplicationUser>> GetUserByNameAsync(string userName);
 
-    Task<bool> SaveAllAsync();
-
+    
+   
     void Update(UserDto user);
 
 

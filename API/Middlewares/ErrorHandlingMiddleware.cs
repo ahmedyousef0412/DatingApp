@@ -46,46 +46,46 @@ public  class ErrorHandlingMiddleware
 
 
 
-    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
-    {
-        //HttpStatusCode status;
-        //string message;
+    //private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    //{
+    //    //HttpStatusCode status;
+    //    //string message;
 
 
-        //if (exception is Exceptions.BadRequestException) 
-        //{
-        //    status = HttpStatusCode.BadRequest;
-        //    message = exception.Message; 
-        //}
-        //else if (exception is Exceptions.NotFoundException) 
-        //{
-        //    status = HttpStatusCode.NotFound;
-        //    message = exception.Message;
-        //}
-        //else if (exception is UnauthorizedAccessException)
-        //{
-        //    status = HttpStatusCode.Unauthorized;
-        //    message = exception.Message;
-        //}
-        //else
-        //{
-        //    status = HttpStatusCode.InternalServerError;
-        //    message = exception.Message; 
-        //}
+    //    //if (exception is Exceptions.BadRequestException) 
+    //    //{
+    //    //    status = HttpStatusCode.BadRequest;
+    //    //    message = exception.Message; 
+    //    //}
+    //    //else if (exception is Exceptions.NotFoundException) 
+    //    //{
+    //    //    status = HttpStatusCode.NotFound;
+    //    //    message = exception.Message;
+    //    //}
+    //    //else if (exception is UnauthorizedAccessException)
+    //    //{
+    //    //    status = HttpStatusCode.Unauthorized;
+    //    //    message = exception.Message;
+    //    //}
+    //    //else
+    //    //{
+    //    //    status = HttpStatusCode.InternalServerError;
+    //    //    message = exception.Message; 
+    //    //}
 
 
-        //var erors = new Error
-        //{
-        //    StatusCode = (int)status,
-        //    Message = message,
-        //};
+    //    //var erors = new Error
+    //    //{
+    //    //    StatusCode = (int)status,
+    //    //    Message = message,
+    //    //};
 
-        //var jsonResponse = JsonSerializer.Serialize(erors);
+    //    //var jsonResponse = JsonSerializer.Serialize(erors);
 
-        //context.Response.ContentType = "application/json";
-        //context.Response.StatusCode = (int)status;
-        //return context.Response.WriteAsync(jsonResponse);
+    //    //context.Response.ContentType = "application/json";
+    //    //context.Response.StatusCode = (int)status;
+    //    //return context.Response.WriteAsync(jsonResponse);
 
-    }
+    //}
 
 }

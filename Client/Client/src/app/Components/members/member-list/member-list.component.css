@@ -1,1 +1,15 @@
 
+#resetFilters {
+    margin-top: 0;
+}
+#applyFilter {
+    margin-top: 0;
+}
+#sorting{
+    margin-top: 0;
+}
+h2{
+  
+    margin-bottom: 5px;
+    background-color: bisque;
+}

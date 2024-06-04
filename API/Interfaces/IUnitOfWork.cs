@@ -6,7 +6,10 @@ public interface IUnitOfWork
 {
 
     IBaseRepository<ApplicationUser> Users { get; }
+    IUserRpository  UserRpository { get; }
     IBaseRepository<Photo> Photos { get; }
 
-    Task<bool> SaveChangesAsync();
+    ApplicationDbContext Context { get; }
+
+    Task<bool> Complete();
 }
